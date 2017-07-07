@@ -59,7 +59,6 @@ del utility_matrix1['Checking account']
 # utility_matrix1, test_data_matrix = train_test_split(utility_matrix1, test_size=0.2)
 
 train_data = utility_matrix1.values.tolist()
-# print(train_data)
 
 # test_data = test_data_matrix.values.tolist()
 # utility_matrix1.to_csv('training.csv')
@@ -83,7 +82,6 @@ class DataFrameImputer(TransformerMixin):
 X = pd.DataFrame(train_data)
 imputed_train_data = DataFrameImputer().fit_transform(X)
 imputed_train_data.columns=new_column_list
-# print(imputed_train_data)
 
 
 imputed_train_data_with_dummies = pd.get_dummies(imputed_train_data, columns = categorical_col_list )
@@ -91,25 +89,18 @@ print(imputed_train_data_with_dummies)
 
 
 imputed_train_data_with_dummies_list = imputed_train_data_with_dummies.values.tolist()
-# print(imputed_train_data_with_dummies_list)
 
 
 # STEP-2 : PERFORMING FEATURE SELECTION VIA PCA
 
 X_std = StandardScaler().fit_transform(imputed_train_data_with_dummies)
-# print(X_std)
-# print('NumPy covariance matrix: \n%s' %np.cov(X_std.T))
 
 # Eigen decomposition of the standardized data based on the correlation matrix:
 cov_mat = np.cov(X_std.T)
 eig_vals, eig_vecs = np.linalg.eig(cov_mat)
-# print('Eigenvectors \n%s' %eig_vecs)
-# print('\nEigenvalues \n%s' %eig_vals)
 
 # Performing SVD
 u,s,v = np.linalg.svd(X_std.T)
-# print("svd")
-# print(u)
 
 # Comparing the results of eigen decomposition of covariance and correlation matrix with SVD we find that it is the same.
 
@@ -123,18 +114,12 @@ eig_pairs = [(np.abs(eig_vals[i]), eig_vecs[:,i]) for i in range(len(eig_vals))]
 # eig_pairs.sort()
 # eig_pairs.reverse()
 
-# print('Eigenvalues corresponding to the feature columns are:')
-# for i in eig_pairs:
-    # print(i[0])
 
 
 # How to select the number of principal components
 tot = sum(eig_vals)
 var_exp = [(i / tot)*100 for i in sorted(eig_vals, reverse=True)]
 cum_var_exp = np.cumsum(var_exp)
-# print(var_exp)
-# print(cum_var_exp)
-
 
 # Observing the eigen values we can remove the following features like Saving accounts, Purpose_radio/TV  Purpose_repairs  Purpose_vacation/others
 # as their eigen values are the least of all and won't contribute much towards the classification.
@@ -156,20 +141,6 @@ imputed_train_data_with_dummies.drop('Purpose_vacation/others',axis=1,inplace=Tr
 
 # Converting the data as numpy array
 data=np.array(imputed_train_data_with_dummies)
-# print(data)
-
-# print(data.shape)
-# print(target.shape)
-
-
-# # Splitting the data into training and test sets.
-# data_train, data_test, target_train, target_test = train_test_split(data,target,test_size=0.2)
-# print(data_train)
-#
-# np.savetxt("data_train.txt",data_train)
-# np.savetxt("data_test.txt", data_test)
-# np.savetxt("target_train.txt", target_train)
-# np.savetxt("target_test.txt", target_test)
 
 
 data_train = np.loadtxt("data_train.txt")
