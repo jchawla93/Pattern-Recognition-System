@@ -1,0 +1,8 @@
+train_data_matrix, test_data_matrix = train_test_split(utility_matrix1, test_size=0.2)
+
+train_data = train_data_matrix.values.tolist()
+test_data = test_data_matrix.values.tolist()
+
+
+train_data_matrix.to_csv('training.csv')
+test_data_matrix.to_csv('testing.csv')
