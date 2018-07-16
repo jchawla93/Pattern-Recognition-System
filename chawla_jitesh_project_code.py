@@ -121,7 +121,7 @@ tot = sum(eig_vals)
 var_exp = [(i / tot)*100 for i in sorted(eig_vals, reverse=True)]
 cum_var_exp = np.cumsum(var_exp)
 
-# Observing the eigen values we can remove the following features like Saving accounts, Purpose_radio/TV  Purpose_repairs  Purpose_vacation/others
+# Observing the eigen values we can remove the following features like Purpose_radio/TV  Purpose_repairs  Purpose_vacation/others
 # as their eigen values are the least of all and won't contribute much towards the classification.
 
 
